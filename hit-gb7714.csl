@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text"
+       name-as-sort-order="all" sort-separator=" " demote-non-dropping-particle="never"
+       initialize-with=" " initialize-with-hyphen="false" page-range-format="expanded"
+       default-locale="zh-CN">
+  <info>
+    <title>HIT(SZ) GB/T 7714-2015 numeric (Typst)</title>
+    <id>https://example.invalid/hitsz-gbt7714-2015-numeric-typst</id>
+    <link href="https://github.com/citation-style-language/styles/blob/master/china-national-standard-gb-t-7714-2015-numeric.csl" rel="template"/>
+    <summary>GB/T 7714-2015 numeric style adapted for the HIT(SZ) Typst report: explicit BibLaTeX note-based document type markers and a Typst 0.15 single-digit superscript workaround.</summary>
+    <updated>2026-10-08T00:00:00+08:00</updated>
+  </info>
+
+  <locale>
+    <date form="numeric">
+      <date-part name="year" range-delimiter="/"/>
+      <date-part name="month" form="numeric-leading-zeros" prefix="-" range-delimiter="/"/>
+      <date-part name="day" form="numeric-leading-zeros" prefix="-" range-delimiter="/"/>
+    </date>
+    <terms>
+      <term name="et-al">et al.</term>
+      <term name="page-range-delimiter">-</term>
+    </terms>
+  </locale>
+
+  <macro name="author">
+    <names variable="author">
+      <name et-al-min="4" et-al-use-first="3">
+        <name-part name="family" text-case="uppercase"/>
+      </name>
+      <substitute>
+        <names variable="editor"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="type-id">
+    <choose>
+      <if variable="note"><text variable="note"/></if>
+      <else-if type="paper-conference"><text value="C"/></else-if>
+      <else-if type="book chapter"><text value="M"/></else-if>
+      <else-if type="software"><text value="CP"/></else-if>
+      <else-if type="standard"><text value="S"/></else-if>
+      <else-if type="report"><text value="R"/></else-if>
+      <else-if type="article-journal article-magazine periodical"><text value="J"/></else-if>
+      <else><text value="EB"/></else>
+    </choose>
+  </macro>
+
+  <macro name="medium-id">
+    <choose>
+      <if variable="URL DOI" match="any"><text value="OL"/></if>
+    </choose>
+  </macro>
+
+  <macro name="title-with-mark">
+    <text variable="title"/>
+    <group delimiter="/" prefix="[" suffix="]">
+      <text macro="type-id"/>
+      <text macro="medium-id"/>
+    </group>
+  </macro>
+
+  <macro name="issued-year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued" form="numeric" date-parts="year"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="accessed-date">
+    <choose>
+      <if variable="URL DOI" match="any">
+        <date variable="accessed" form="numeric" prefix="[" suffix="]"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="online-date">
+    <group delimiter="">
+      <text macro="issued-year"/>
+      <text macro="accessed-date"/>
+    </group>
+  </macro>
+
+  <macro name="conference-container">
+    <group delimiter=". ">
+      <text variable="container-title"/>
+      <group delimiter=", ">
+        <text variable="publisher"/>
+        <text macro="issued-year"/>
+      </group>
+    </group>
+    <text variable="page" prefix=": "/>
+    <text macro="accessed-date"/>
+  </macro>
+
+  <macro name="access">
+    <choose>
+      <if variable="URL"><text variable="URL"/></if>
+      <else-if variable="DOI"><text variable="DOI" prefix="DOI:"/></else-if>
+    </choose>
+  </macro>
+
+  <macro name="entry-layout">
+    <group delimiter=". ">
+      <text macro="author"/>
+      <choose>
+        <if type="paper-conference">
+          <group delimiter="//">
+            <text macro="title-with-mark"/>
+            <text macro="conference-container"/>
+          </group>
+        </if>
+        <else>
+          <text macro="title-with-mark"/>
+          <text macro="online-date"/>
+        </else>
+      </choose>
+      <text macro="access"/>
+    </group>
+  </macro>
+
+  <citation collapse="citation-number" after-collapse-delimiter=",">
+    <sort><key variable="citation-number"/></sort>
+    <layout vertical-align="sup" delimiter="," prefix="[" suffix="]">
+      <text variable="citation-number" suffix="&#8288;"/>
+    </layout>
+  </citation>
+
+  <bibliography entry-spacing="0" et-al-min="4" et-al-use-first="3" second-field-align="flush">
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <text macro="entry-layout"/>
+    </layout>
+  </bibliography>
+</style>

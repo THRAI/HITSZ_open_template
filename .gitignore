@@ -1,0 +1,6 @@
+build/
+*.pdf
+.DS_Store
+# Local font files. Commit only if you have redistribution rights.
+fonts/*
+!fonts/README.md
